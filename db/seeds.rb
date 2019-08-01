@@ -41,7 +41,3 @@ Appointment.destroy_all
     patient: Patient.order('RANDOM()').first,
     city: City.order('RANDOM()').first)
 end
-
-# Specialty.create!(
-#   name
-# )
