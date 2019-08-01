@@ -7,6 +7,14 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 require 'faker'
+
+City.destroy_all
+10.times do
+  City.create!(
+    name: Faker::Address.city
+    )
+end
+
 Doctor.destroy_all
 Patient.destroy_all
 50.times do |index|
@@ -15,11 +23,14 @@ Patient.destroy_all
   d.last_name = Faker::Name.last_name
   d.specialty = (["Allergy", "Anesthesiology", "Dermatology", "Radiology", "Emergency medecine", "Generalist", "Internal medecine", "Neurology", "Nuclear medecine", "Gynecology", "Ophtalmology", "Pathology", "Pediatrics", "Physical medecine", "Preventive medecine", "Psychiatry", "Radiation oncology", "Surgery", "Urology"]).sample
   d.zip_code = Faker::Address.zip_code
+  d.city = City.order('RANDOM()').first
   d.save
   p = Patient.create
   p.first_name = Faker::Name.first_name
   p.last_name = Faker::Name.last_name
+  p.city = City.order('RANDOM()').first
   p.save
+
 end
 
 Appointment.destroy_all
@@ -27,5 +38,10 @@ Appointment.destroy_all
   Appointment.create!(
     date: Faker::Time.forward(days: 365, period: :day).to_datetime,
     doctor: Doctor.order('RANDOM()').first,
-    patient: Patient.order('RANDOM()').first)
+    patient: Patient.order('RANDOM()').first,
+    city: City.order('RANDOM()').first)
 end
+
+# Specialty.create!(
+#   name
+# )
